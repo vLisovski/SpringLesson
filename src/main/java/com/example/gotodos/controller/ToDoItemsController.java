@@ -4,13 +4,12 @@ import com.example.gotodos.model.TodoItem;
 
 import com.example.gotodos.service.TodoItemsService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping(path="/todos")
 @AllArgsConstructor
 public class ToDoItemsController {
@@ -21,5 +20,16 @@ public class ToDoItemsController {
     public List<TodoItem> getAll() {
 
         return todoItemsService.getAll();
+    }
+
+    @PostMapping(value = "/addNew")
+    public void addNew(@RequestBody TodoItem todoItem){
+        todoItemsService.addNew(todoItem);
+    }
+
+    @DeleteMapping(value = "/deleteById/{id}")
+    public void deleteById(@PathVariable int id){
+        todoItemsService.deleteById(id);
+
     }
 }
